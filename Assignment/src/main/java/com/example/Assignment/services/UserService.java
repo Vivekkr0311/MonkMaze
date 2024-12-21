@@ -1,6 +1,6 @@
 package com.example.Assignment.services;
 
-import com.example.Assignment.models.User;
+import com.example.Assignment.models.user.User;
 import com.example.Assignment.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

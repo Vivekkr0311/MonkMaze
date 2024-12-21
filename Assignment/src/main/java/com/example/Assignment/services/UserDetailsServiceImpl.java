@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import com.example.Assignment.models.User;
+import com.example.Assignment.models.user.User;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -14,7 +14,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email).orElse(null);
         if(user != null){
             UserDetails userDetails = org.springframework.security.core.userdetails.User

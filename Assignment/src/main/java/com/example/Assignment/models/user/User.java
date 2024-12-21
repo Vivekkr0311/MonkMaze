@@ -1,4 +1,4 @@
-package com.example.Assignment.models;
+package com.example.Assignment.models.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +23,4 @@ public class User {
 
     @Column(nullable = false)
     private String password;
-    private final String ROLE = "USER";
 }
