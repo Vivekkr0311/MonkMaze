@@ -3,7 +3,6 @@ package com.example.Assignment.models;
 import lombok.Data;
 
 @Data
-public class TokenClass {
-    private String access_token;
+public class RefreshToken {
     private String refresh_token;
 }

@@ -36,12 +36,20 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .csrf(csrf -> csrf.disable());
+        http
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS)
+                );
         http.authorizeHttpRequests(
-                request -> request.requestMatchers("/api/signup").permitAll()
+                request -> request
+                        // we will later change the setting for h2
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/api/signup").permitAll()
                         .requestMatchers("/api/signin").permitAll()
-                        .requestMatchers("/api/refresh").authenticated()
+                        .requestMatchers("/api/refresh_token").authenticated()
                         .requestMatchers("/api/products").authenticated()
         );
+        http.headers().frameOptions().sameOrigin();
         http.httpBasic(httpSecurityHttpBasicConfigurer -> {});
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
