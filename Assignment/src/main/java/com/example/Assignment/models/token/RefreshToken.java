@@ -1,4 +1,4 @@
-package com.example.Assignment.models;
+package com.example.Assignment.models.token;
 
 import lombok.Data;
 

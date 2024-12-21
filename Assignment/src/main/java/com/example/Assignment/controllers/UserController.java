@@ -1,13 +1,12 @@
 package com.example.Assignment.controllers;
 
-import com.example.Assignment.models.Access_Token;
-import com.example.Assignment.models.RefreshToken;
-import com.example.Assignment.models.TokenClass;
-import com.example.Assignment.models.User;
+import com.example.Assignment.models.token.Access_Token;
+import com.example.Assignment.models.token.RefreshToken;
+import com.example.Assignment.models.token.TokenClass;
+import com.example.Assignment.models.user.User;
 import com.example.Assignment.services.UserService;
 import com.example.Assignment.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

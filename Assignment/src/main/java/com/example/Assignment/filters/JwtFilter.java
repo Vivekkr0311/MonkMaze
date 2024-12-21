@@ -30,6 +30,11 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Wrap the request to cache the body
+        if(request.getRequestURI().contains("/products")){
+            headerTokenFilter(request);
+            filterChain.doFilter(request, response);
+            return;
+        }
         CachedBodyHttpServletRequest cachedRequest = new CachedBodyHttpServletRequest(request);
 
         // Proceed with the wrapped request
@@ -50,11 +55,6 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(cachedRequest, response);
-    }
-
-    private boolean isSignupOrSignin(HttpServletRequest request) {
-        // Skip authentication logic for signup and signin requests
-        return request.getRequestURI().contains("/signup") || request.getRequestURI().contains("/signin");
     }
 
     private void authenticateWithToken(String token) {
@@ -109,5 +109,22 @@ public class JwtFilter extends OncePerRequestFilter {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void headerTokenFilter(HttpServletRequest request){
+        String authorizationHeader = request.getHeader("Authorization");
+        if(authorizationHeader != null && !authorizationHeader.isEmpty() && authorizationHeader.startsWith("Bearer ")){
+            String token = authorizationHeader.substring(7);
+            String userEmail = jwtUtils.getEmail(token);
+
+            if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
+                UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+
+                if(jwtUtils.isTokenValid(token, userEmail)){
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            }
+        }
     }
 }

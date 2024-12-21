@@ -47,7 +47,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/signup").permitAll()
                         .requestMatchers("/api/signin").permitAll()
                         .requestMatchers("/api/refresh_token").authenticated()
-                        .requestMatchers("/api/products").authenticated()
+                        .requestMatchers("/api/products/**").authenticated()
         );
         http.headers().frameOptions().sameOrigin();
         http.httpBasic(httpSecurityHttpBasicConfigurer -> {});
