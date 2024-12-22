@@ -25,4 +25,14 @@ public class ProductService {
     public List<Product> findAllProducts(){
         return productRepository.findAll();
     }
+
+    public boolean buyProduct(Long id){
+        Product product = productRepository.findById(id).orElse(null);
+
+        if(product != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
